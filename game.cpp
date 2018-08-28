@@ -27,7 +27,6 @@ int main(int argc , char *argv[])
 	thread_pool *myPool = new thread_pool(THREADS_NUM);
 	pthread_t threads[THREADS_NUM];
 	myPool->initThreads(threads);
-
 	int code[4];
 
     int opt = TRUE;
@@ -175,9 +174,18 @@ int main(int argc , char *argv[])
                 {
                     //set the string terminating NULL byte on the end of the data read
                     buffer[valread] = '\0';
-		    cout << "Player " << i << " guess is: " << buffer << endl;
-		    cout << "Player " << i << " code is: " << players_codes[i] << endl;
-                    //send(sd , buffer , strlen(buffer) , 0 );
+        	    job *newJob = new job(i, players_codes[i], buffer);
+        	    myPool->assignJob(newJob);
+		    if(newJob->GetCompareResult() == 0)
+		    {
+			send(sd , "Success!" , strlen("Success!") , 0 );
+			//Close the socket and mark as 0 in list for reuse
+			close( sd );
+			client_socket[i] = 0;
+		    }
+		    else {
+			send(sd , "Wrong!" , strlen("Wrong!") , 0 );
+		    }
                 }
             }
         }
@@ -185,8 +193,8 @@ int main(int argc , char *argv[])
 
 //==============================================================
 if(1==0){
-        job *newJob = new job(0);
-        myPool->assignJob(newJob);
+        //job *newJob = new job(0);
+        //myPool->assignJob(newJob);
     	while(job::finished_jobs < JOBS_NUM);
 }
 //==============================================================

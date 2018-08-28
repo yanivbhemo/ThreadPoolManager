@@ -3,6 +3,8 @@
  
 #include <iostream>
 #include <stdlib.h>
+#include <string>
+#include <sstream>
 #include <queue>
 #include <pthread.h>
 #include <unistd.h>
@@ -22,24 +24,57 @@ using namespace std;
 class job
 {
 public:
-    job(int id) : jobID(id) {}
+    job(int id, int code, string userGuess) : jobID(id), code(code) { stringstream toString(userGuess); toString >> guess; result = 1; }
     virtual ~job(){}
     //will be overrided by specific JOB
-    void virtual working()
+    int virtual working()
     {
         pthread_mutex_lock(&jobLock);
         finished_jobs++;
         pthread_mutex_unlock(&jobLock);
         cout << "JOB:" << jobID << " starts!\n";
         sleep(1);
-         
+        return 0; 
     }
+    int compare()
+    {
+	const char *path = "game_log.txt";
+	int flag=1; //0 Bulls-eye, 1 Wrong
+	if(code == guess){
+		flag = 0;
+	}
+	
+	char buffer[50];
+	if(flag==0){
+		sprintf(buffer, "Game %d - Code: %d - Guess: %d - Correct!\n", jobID, code, guess); 
+		printf("Game %d - Code: %d - Guess: %d - Correct!\n", jobID, code, guess);
+	}
+	else {
+		sprintf(buffer, "Game %d - Code: %d - Guess: %d - Wrong!\n", jobID, code, guess); 
+		printf("Game %d - Code: %d - Guess: %d - Wrong!\n", jobID, code, guess); 
+	}
+
+	pthread_mutex_lock(&jobLock);
+	int logfile_fd = open(path, O_APPEND | O_WRONLY, 0600);
+	write(logfile_fd, buffer, strlen(buffer));
+	result = flag;
+	pthread_mutex_unlock(&jobLock);	
+        sleep(1);
+	if(flag == 0)
+		return 0;
+	else
+		return 1;	
+    }
+	int GetCompareResult() { return result; }
     static int finished_jobs;
     static pthread_mutex_t jobLock;
 private:
-    int jobID;
+  	int jobID;
+	int code;
+	int guess;
+	int result;
 };
- 
+
 class thread_pool
 {
 public:
@@ -84,7 +119,6 @@ void thread_pool::assignJob(job* _job_)
 bool thread_pool::loadJob(job*& _job_)
 {
     pthread_mutex_lock(&jobQueue_lock);
-    cout << "Search for jobs to do" << endl;
     while(jobQueue.empty())
         pthread_cond_wait(&jobQueue_cond, &jobQueue_lock);
     _job_ = jobQueue.front();
@@ -100,7 +134,7 @@ void *thread_pool::threadExecute(void *param)
     while(p->loadJob(oneJob))
     {
         if(oneJob)
-            oneJob->working();
+            oneJob->compare();
         delete oneJob;
         oneJob = NULL;
     }

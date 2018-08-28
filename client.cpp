@@ -49,6 +49,14 @@ int main(void)
 	{
 		if(send(sock, buffer1, sizeof(buffer1),0) != strlen(buffer1))
 			perror("send");
+		nrecv = recv(sock, someBuffer, sizeof(someBuffer), 0);
+		if (nrecv == -1)
+		{
+			perror("recv");
+			return 1;
+		}
+		someBuffer[nrecv] = '\0';
+		std::cout << someBuffer << std::endl;
 		cout << "Please make a 4 digit guess: ";
 		cin >> guess;
 	}

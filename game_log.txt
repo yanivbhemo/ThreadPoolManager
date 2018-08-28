@@ -1,0 +1,29 @@
+Game 0 - Code: 3675 - Guess: 3333
+Game 0 - Code: 3675 - Guess: 2222
+Game 0 - Code: 3675 - Guess: 3333
+Game 1 - Code: 3562 - Guess: 3333
+Game 1 - Code: 3562 - Guess: 2222
+Game 1 - Code: 3562 - Guess: 1231
+Game 1 - Code: 3562 - Guess: 2324
+Game 0 - Code: 3675 - Guess: 1234 - Wrong!
+Game 0 - Code: 3675 - Guess: 3675 - Correct!
+Game 0 - Code: 3675 - Guess: 1233 - Wrong!
+Game 0 - Code: 3675 - Guess: 123 - Wrong!
+Game 0 - Code: 3675 - Guess: 3333 - Wrong!
+Game 0 - Code: 3675 - Guess: 1234 - Wrong!
+Game 0 - Code: 3675 - Guess: 1234 - Wrong!
+Game 0 - Code: 3675 - Guess: 1234 - Wrong!
+Game 0 - Code: 3675 - Guess: 3675 - Correct!
+Game 0 - Code: 3675 - Guess: 123 - Wrong!
+Game 0 - Code: 3675 - Guess: 3675 - Correct!
+Game 0 - Code: 3675 - Guess: 4444 - Wrong!
+Game 0 - Code: 3675 - Guess: 3333 - Wrong!
+Game 0 - Code: 3675 - Guess: 3675 - Correct!
+Game 0 - Code: 3675 - Guess: 1233 - Wrong!
+Game 0 - Code: 3675 - Guess: 3675 - Correct!
+Game 0 - Code: 3675 - Guess: 1234 - Wrong!
+Game 0 - Code: 3675 - Guess: 3675 - Correct!
+Game 0 - Code: 3675 - Guess: 3675 - Correct!
+Game 0 - Code: 3675 - Guess: 1234 - Wrong!
+Game 0 - Code: 3675 - Guess: 1234 - Wrong!
+Game 0 - Code: 3675 - Guess: 3675 - Correct!
